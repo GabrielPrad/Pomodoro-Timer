@@ -1,0 +1,20 @@
+.button {
+  width: 2rem;
+  height: 1rem;
+}
+
+.primary {
+  color: purple;
+}
+
+.secondary {
+  color: orange;
+}
+
+.success {
+  color: green;
+}
+
+.danger {
+  color: red;
+}
