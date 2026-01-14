@@ -4,17 +4,17 @@
 }
 
 .primary {
-  color: purple;
+  background: purple;
 }
 
 .secondary {
-  color: orange;
+  background: orange;
 }
 
 .success {
-  color: green;
+  background: green;
 }
 
 .danger {
-  color: red;
+  background: red;
 }
