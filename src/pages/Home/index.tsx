@@ -3,6 +3,7 @@ import { HomeContainer, FormContainer, CountdownContainer, Separator, StartCount
 import { useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as zod from 'zod'
+import { useState } from "react";
  
 
 const newCycleFormValidationSchema = zod.object({
@@ -10,14 +11,17 @@ const newCycleFormValidationSchema = zod.object({
   minutesAmount: zod.number().min(5).max(60),
 })
 
-// interface NewCycleFormData {
-//   task: string,
-//   minutesAmount: number
-// }
-
 type NewCycleFormData = zod.infer<typeof newCycleFormValidationSchema>
 
+interface Cycle {
+  id: string,
+  task: string,
+  minutesAmount: number
+}
+
 export function Home() {
+  const [cycles, setCycles] = useState<Cycle[]>([])
+  const [activeCycleId, setActiveCycleId] = useState<string | null>(null)
 
   const { register, handleSubmit, watch, reset } = useForm<NewCycleFormData>({
     resolver: zodResolver(newCycleFormValidationSchema),
@@ -28,7 +32,17 @@ export function Home() {
   })  
 
   function handleCreateNewCicle(data: NewCycleFormData) {
-    console.log(data);
+    const newCycle: Cycle = {
+      id: String(new Date().getTime()),
+      task: data.task,
+      minutesAmount: data.minutesAmount
+    }
+
+    const activeCycle = cycles.find(cycle => cycle.id === activeCycleId)
+
+    setCycles((state) => [...cycles, newCycle])
+    setActiveCycleId(newCycle.id)
+
     reset()
   }
 
